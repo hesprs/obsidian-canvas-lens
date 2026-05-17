@@ -1,0 +1,10 @@
+{
+	"id": "canvas-svg-export",
+	"name": "Canvas SVG Export",
+	"version": "0.0.1",
+	"minAppVersion": "0.15.0",
+	"authorUrl": "https://hesprs.github.io",
+	"description": "Exports Canvas SVGs to your vault.",
+	"author": "Hēsperus",
+	"isDesktopOnly": false
+}
