@@ -1,6 +1,6 @@
 {
-	"id": "canvas-svg-export",
-	"name": "Canvas SVG Export",
+	"id": "canvas-lens",
+	"name": "Canvas Lens",
 	"version": "0.0.1",
 	"minAppVersion": "0.15.0",
 	"authorUrl": "https://hesprs.github.io",
