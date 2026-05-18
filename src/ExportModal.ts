@@ -5,6 +5,7 @@ import { Modal, MarkdownRenderer, Setting } from 'obsidian';
 import t from './i18n';
 import PostProcessor from './PostProcessor';
 import renderToString from './render';
+import interpretPath from './utils/interpret-path';
 import NodeComponent from './utils/node-to-component';
 
 export default class ExportModal extends Modal {
@@ -20,11 +21,19 @@ export default class ExportModal extends Modal {
 	viewer?: JSONCanvasViewerInterface<[PostProcessor]>;
 
 	onOpen() {
+		const attachments: Record<string, string> = {};
+		for (const node of this.canvas.nodes || []) {
+			if (node.type !== 'file') continue;
+			const file = interpretPath(node.file, this.app);
+			if (!file) continue;
+			attachments[node.file] = this.app.vault.adapter.getResourcePath(file.path);
+		}
 		const canvasEl = this.contentEl.createDiv({
 			cls: 'h-60vh w-100% rounded-xl overflow-hidden',
 		});
 		this.viewer = new JSONCanvasViewer(
 			{
+			    attachments,
 				canvas: this.canvas,
 				container: canvasEl,
 				nodeComponents: {
