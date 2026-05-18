@@ -27,7 +27,7 @@ export default class ExportModal extends Modal {
 			container: canvasEl,
 			nodeComponents: {
 				text: async ({ container, content }) => {
-					container.addClass('px-4', 'font-[system-ui]');
+					container.addClass('px-4');
 					await MarkdownRenderer.render(
 						this.app,
 						content,
