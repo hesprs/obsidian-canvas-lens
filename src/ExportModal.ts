@@ -1,12 +1,10 @@
 import type { JSONCanvas, JSONCanvasViewerInterface } from 'json-canvas-viewer';
 import type { App } from 'obsidian';
-import { JSONCanvasViewer } from 'json-canvas-viewer';
-import { Modal, MarkdownRenderer, Setting } from 'obsidian';
-import t from './i18n';
-import PostProcessor from './PostProcessor';
-import renderToString from './render';
-import interpretPath from './utils/interpret-path';
-import NodeComponent from './utils/node-to-component';
+import { Modal, Setting } from 'obsidian';
+import t from '@/i18n';
+import PostProcessor from '@/PostProcessor';
+import renderToString from '@/render';
+import mountViewer from '@/utils/mount-viewer';
 
 export default class ExportModal extends Modal {
 	constructor(
@@ -21,37 +19,16 @@ export default class ExportModal extends Modal {
 	viewer?: JSONCanvasViewerInterface<[PostProcessor]>;
 
 	onOpen() {
-		const attachments: Record<string, string> = {};
-		for (const node of this.canvas.nodes || []) {
-			if (node.type !== 'file') continue;
-			const file = interpretPath(node.file, this.app);
-			if (!file) continue;
-			attachments[node.file] = this.app.vault.adapter.getResourcePath(file.path);
-		}
 		const canvasEl = this.contentEl.createDiv({
 			cls: 'h-60vh w-100% rounded-xl overflow-hidden',
 		});
-		this.viewer = new JSONCanvasViewer(
-			{
-			    attachments,
-				canvas: this.canvas,
-				container: canvasEl,
-				nodeComponents: {
-					text: async ({ container, content }) => {
-						container.addClass('px-4');
-						await MarkdownRenderer.render(
-							this.app,
-							content,
-							container,
-							this.filePath,
-							new NodeComponent(),
-						);
-					},
-				},
-				theme: this.app.isDarkMode() ? 'dark' : 'light',
-			},
-			[PostProcessor],
-		);
+		this.viewer = mountViewer({
+			app: this.app,
+			canvas: this.canvas,
+			host: canvasEl,
+			modules: [PostProcessor],
+			path: this.filePath,
+		});
 		new Setting(this.contentEl).addButton((button) =>
 			button
 				.setButtonText(t('exportToSVG'))
@@ -71,5 +48,6 @@ export default class ExportModal extends Modal {
 
 	onClose() {
 		this.viewer?.dispose();
+		this.viewer = undefined;
 	}
 }

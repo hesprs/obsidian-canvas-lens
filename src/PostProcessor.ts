@@ -1,3 +1,4 @@
+// oxlint-disable no-underscore-dangle
 import type { BaseArgs, BaseOptions } from 'json-canvas-viewer';
 import { BaseModule, internal } from 'json-canvas-viewer';
 import { Context } from 'svgcanvas';
@@ -26,7 +27,8 @@ export default class PostProcessor extends BaseModule<
 		const ctx = new Context(container.clientWidth, container.clientHeight);
 		renderer.ctx = ctx;
 		renderer.redraw();
-		// oxlint-disable-next-line no-underscore-dangle
-		renderer._canvas.replaceWith(ctx.getSvg());
+		const svg = ctx.getSvg();
+		renderer._canvas.replaceWith(svg);
+		renderer._canvas = svg;
 	};
 }
