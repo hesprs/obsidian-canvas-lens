@@ -118,6 +118,9 @@ packages:
   '@codemirror/state@6.5.0':
     resolution: {integrity: sha512-MwBHVK60IiIHDcoMet78lxt6iw5gJOGSbNbOIVBHWVXIH4/Nq1+GQgLLGgI1KlnN86WDXsPudVaqYHKBIx7Eyw==}
 
+  '@codemirror/state@6.6.0':
+    resolution: {integrity: sha512-4nbvra5R5EtiCzr9BTHiTLc+MLXK2QGiAVYMyi8PkQd3SR+6ixar/Q/01Fa21TBIDOZXgeWV4WppsQolSreAPQ==}
+
   '@codemirror/view@6.38.6':
     resolution: {integrity: sha512-qiS0z1bKs5WOvHIAC0Cybmv4AJSkAXgX5aD6Mqd2epSLlVJsQl8NG23jCVouIgkh4All/mrbdsf2UOLFnJw0tw==}
 
@@ -1318,7 +1321,7 @@ packages:
     engines: {node: '>=0.3.1'}
 
   dom-svg-parser@file:dom-svg-parser.tgz:
-    resolution: {integrity: sha512-KXPjnR+rbu228nb7eLXqN7NyOMyUFYixDQt6EZtMV+XT4s77KQchIQrQooVJ47KpfhMVB8CxMaQZG/kGB5GDNg==, tarball: file:dom-svg-parser.tgz}
+    resolution: {integrity: sha512-me6wLTFx4XkXPDpS7FTQUz8AvlEOxgtkSj2D5mjba77ErX2iHbb3VrsYccITQL1NZMKEWS6aTPc/ber5Bglxcg==, tarball: file:dom-svg-parser.tgz}
     version: 0.0.1
 
   dompurify@3.4.3:
@@ -2220,9 +2223,13 @@ snapshots:
     dependencies:
       '@marijn/find-cluster-break': 1.0.2
 
+  '@codemirror/state@6.6.0':
+    dependencies:
+      '@marijn/find-cluster-break': 1.0.2
+
   '@codemirror/view@6.38.6':
     dependencies:
-      '@codemirror/state': 6.5.0
+      '@codemirror/state': 6.6.0
       crelt: 1.0.6
       style-mod: 4.1.3
       w3c-keyname: 2.2.8

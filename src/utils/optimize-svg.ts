@@ -1,3 +1,5 @@
+import { roundSf } from './fns';
+
 const NUMERIC_ATTRS = new Set([
 	'x',
 	'y',
@@ -46,8 +48,7 @@ export default function optimizeSvgNumbers(svg: SVGSVGElement, precision = 2): v
 			const optimized = original.replace(FLOAT_REGEX, (match) => {
 				const num = parseFloat(match);
 				if (isNaN(num)) return match;
-				const rounded = Number(num.toFixed(precision));
-				return rounded.toString();
+				return roundSf(num, precision).toString();
 			});
 			if (optimized !== original) el.setAttribute(attr.name, optimized);
 		}
