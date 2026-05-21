@@ -1,36 +1,25 @@
 import type { JSONCanvas, JSONCanvasViewerInterface } from 'json-canvas-viewer';
-import { Plugin, FileView, MarkdownView } from 'obsidian';
+import { Plugin, FileView } from 'obsidian';
 import t from '@/i18n';
 import './styles.css';
+import type { Settings } from './settings';
 import ExportModal from './ExportModal';
+import { SettingTab } from './settings';
 import embedCanvas from './utils/embed-canvas';
 import watchClass from './utils/watch-class';
 
-export default class WebDAVSyncPlugin extends Plugin {
-	trackedViews = new WeakSet<MarkdownView>();
-	trackedCanvas = new WeakMap<HTMLElement, JSONCanvasViewerInterface>();
+export default class CanvasLens extends Plugin {
+	private readonly trackedCanvas = new WeakMap<HTMLElement, JSONCanvasViewerInterface>();
+
+	settings: Settings = {
+		customSvgLocation: '/',
+		defaultSvgLocation: 'same-folder',
+		noExportModal: false,
+		substituteDefaultEmbed: true,
+	};
+
 	disconnect?: () => void;
-
-	onload() {
-		this.addCommand({
-			checkCallback: (checking) => {
-				const view = this.app.workspace.getActiveViewOfType(FileView);
-				if (view?.getViewType() === 'canvas' && view.file) {
-					if (checking) return true;
-					new ExportModal(
-						this.app,
-						structuredClone(
-							(view as unknown as { canvas: { data: JSONCanvas } }).canvas.data,
-						),
-						view.file.path,
-					).open();
-				}
-			},
-			icon: 'refresh-cw',
-			id: 'export-to-svg',
-			name: t('exportToSVG'),
-		});
-
+	connect = () => {
 		this.disconnect = watchClass(activeDocument.body, [
 			{
 				callback: async (el) => {
@@ -52,6 +41,30 @@ export default class WebDAVSyncPlugin extends Plugin {
 				type: 'remove',
 			},
 		]);
+	};
+
+	async onload() {
+		this.addCommand({
+			checkCallback: (checking) => {
+				const view = this.app.workspace.getActiveViewOfType(FileView);
+				if (view?.getViewType() === 'canvas' && view.file) {
+					if (checking) return true;
+					new ExportModal(
+						this.app,
+						structuredClone(
+							(view as unknown as { canvas: { data: JSONCanvas } }).canvas.data,
+						),
+						view.file.path,
+					).open();
+				}
+			},
+			icon: 'refresh-cw',
+			id: 'export-to-svg',
+			name: t('exportToSVG'),
+		});
+		this.addSettingTab(new SettingTab(this));
+		Object.assign(this.settings, await this.loadData());
+		if (this.settings.substituteDefaultEmbed) this.connect();
 	}
 
 	onunload() {
