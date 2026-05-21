@@ -91,7 +91,9 @@
 		"node": true
 	},
 	"globals": {
-		"activeDocument": "readonly"
+		"activeDocument": "readonly",
+		"createDiv": "readonly",
+		"createSpan": "readonly"
 	},
 	"ignorePatterns": ["**/node_modules/**", "**/dist/**"],
 	"options": {

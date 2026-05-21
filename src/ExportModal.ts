@@ -1,10 +1,10 @@
 import type { JSONCanvas, JSONCanvasViewerInterface } from 'json-canvas-viewer';
 import type { App } from 'obsidian';
 import { Modal, Setting } from 'obsidian';
-import PostProcessor from '@/CanvasPostProcessor';
 import t from '@/i18n';
 import renderToString from '@/render';
 import mountViewer from '@/utils/mount-viewer';
+import PostProcessor from '@/viewer-modules/CanvasPostProcessor';
 import getAspectRatio from './utils/get-aspect-ratio';
 
 export default class ExportModal extends Modal {
@@ -20,7 +20,7 @@ export default class ExportModal extends Modal {
 	viewer?: JSONCanvasViewerInterface<[PostProcessor]>;
 
 	onOpen() {
-		const canvasEl = this.contentEl.createDiv({ cls: 'w-100% rounded-xl overflow-hidden' });
+		const canvasEl = this.contentEl.createDiv({ cls: 'w-100% mb-4' });
 		canvasEl.style.aspectRatio = getAspectRatio(this.canvas);
 		this.viewer = mountViewer({
 			app: this.app,

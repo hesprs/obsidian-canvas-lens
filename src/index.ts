@@ -1,11 +1,16 @@
-import type { JSONCanvas } from 'json-canvas-viewer';
+import type { JSONCanvas, JSONCanvasViewerInterface } from 'json-canvas-viewer';
 import { Plugin, FileView, MarkdownView } from 'obsidian';
 import t from '@/i18n';
 import './styles.css';
-import embedCanvas from './canvas-embed';
 import ExportModal from './ExportModal';
+import embedCanvas from './utils/embed-canvas';
+import watchClass from './utils/watch-class';
 
 export default class WebDAVSyncPlugin extends Plugin {
+	trackedViews = new WeakSet<MarkdownView>();
+	trackedCanvas = new WeakMap<HTMLElement, JSONCanvasViewerInterface>();
+	disconnect?: () => void;
+
 	onload() {
 		this.addCommand({
 			checkCallback: (checking) => {
@@ -25,21 +30,31 @@ export default class WebDAVSyncPlugin extends Plugin {
 			id: 'export-to-svg',
 			name: t('exportToSVG'),
 		});
-		this.registerMarkdownPostProcessor((el) => void embedCanvas(el, this.app));
-		// Enable embed in live preview
-		this.registerEvent(
-			this.app.workspace.on('active-leaf-change', (leaf) => {
-				if (!leaf) return;
-				const view = leaf.view;
-				const vault = this.app.vault as unknown as { config: { livePreview: boolean } };
-				if (
-					!(view instanceof MarkdownView) ||
-					view.getMode() !== 'source' ||
-					!vault.config.livePreview
-				)
-					return;
-				void embedCanvas(view.contentEl, this.app);
-			}),
-		);
+
+		this.disconnect = watchClass(activeDocument.body, [
+			{
+				callback: async (el) => {
+					const parent = el.parentElement;
+					if (!parent) return;
+					const viewer = await embedCanvas(parent, this.app);
+					if (viewer) this.trackedCanvas.set(parent, viewer);
+				},
+				className: 'canvas-minimap',
+				type: 'add',
+			},
+			{
+				callback: (el) => {
+					const viewer = this.trackedCanvas.get(el as HTMLElement);
+					if (viewer) viewer.dispose();
+					this.trackedCanvas.delete(el as HTMLElement);
+				},
+				className: 'canvas-embed',
+				type: 'remove',
+			},
+		]);
+	}
+
+	onunload() {
+		this.disconnect?.();
 	}
 }

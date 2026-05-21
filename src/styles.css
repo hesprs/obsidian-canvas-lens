@@ -1,1 +1,35 @@
 @unocss;
+
+.internal-embed.canvas-embed {
+	border: 1px solid var(--background-modifier-border);
+	box-shadow: var(--background-modifier-box-shadow);
+	border-radius: 0.75em;
+	overflow: hidden;
+}
+
+.internal-embed[src] > .canvas-minimap {
+	display: none;
+	~ .embed-title {
+		display: none;
+	}
+}
+
+.canvas-embed > .JSON-Canvas-Viewer > .JCV-badge {
+	position: absolute;
+	top: 12px;
+	left: 12px;
+	border-radius: 12px;
+	padding: 4px 12px;
+	color: var(--text);
+	font-size: calc(14px + 0.3vw);
+	user-select: none;
+	transition: var(--containerTransition);
+	background-color: var(--background-secondary);
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+}
+
+.canvas-embed > .JSON-Canvas-Viewer > .JCV-badge:hover {
+	background-color: var(--border);
+}

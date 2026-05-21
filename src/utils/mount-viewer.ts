@@ -18,6 +18,7 @@ type MountOptions<M extends Array<GeneralModuleCtor>> = {
 	loading?: Options['loading'];
 	modules?: M;
 	component?: Component;
+	options?: Partial<Options<M>>;
 };
 
 export default function mountViewer<M extends Array<GeneralModuleCtor> = []>({
@@ -28,6 +29,7 @@ export default function mountViewer<M extends Array<GeneralModuleCtor> = []>({
 	loading = 'normal',
 	modules,
 	component = new NodeComponent(),
+	options,
 }: MountOptions<M>): JSONCanvasViewerInterface<M> {
 	const attachments: Record<string, string> = {};
 	for (const node of canvas.nodes || []) {
@@ -55,6 +57,7 @@ export default function mountViewer<M extends Array<GeneralModuleCtor> = []>({
 				},
 			},
 			theme: app.isDarkMode() ? 'dark' : 'light',
+			...options,
 		} as Options<M>,
 		modules,
 	);
