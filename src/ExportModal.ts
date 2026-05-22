@@ -1,50 +1,64 @@
+import type CanvasLens from '@';
 import type { JSONCanvas, JSONCanvasViewerInterface } from 'json-canvas-viewer';
-import type { App } from 'obsidian';
 import { Modal, Setting } from 'obsidian';
+import type { Settings } from '@/settings';
 import t from '@/i18n';
-import renderToString from '@/render';
+import ensureAvailable from '@/utils/ensure-parents';
+import getAspectRatio from '@/utils/get-aspect-ratio';
 import mountViewer from '@/utils/mount-viewer';
+import renderToString from '@/utils/render-to-string';
 import PostProcessor from '@/viewer-modules/CanvasPostProcessor';
-import getAspectRatio from './utils/get-aspect-ratio';
 
 export default class ExportModal extends Modal {
 	constructor(
-		app: App,
+		plugin: CanvasLens,
 		private readonly canvas: JSONCanvas,
 		private readonly filePath: string,
 	) {
-		super(app);
+		super(plugin.app);
 		this.setTitle(t('exportToSVG'));
+		this.settings = plugin.settings;
 	}
 
+	settings: Settings;
 	viewer?: JSONCanvasViewerInterface<[PostProcessor]>;
+	canvasEl?: HTMLElement;
+
+	private readonly generatePath = {
+		custom: () => {
+			const basename = this.filePath.split('/').pop();
+			const folder = this.settings.customExportFolder;
+			return `${folder === '/' ? '' : folder}${basename?.slice(0, basename.lastIndexOf('.'))}.svg`;
+		},
+		sameFolder: () => `${this.filePath.slice(0, this.filePath.lastIndexOf('.'))}.svg`,
+	};
 
 	onOpen() {
-		const canvasEl = this.contentEl.createDiv({ cls: 'w-100% mb-4' });
-		canvasEl.style.aspectRatio = getAspectRatio(this.canvas);
+		this.canvasEl = this.contentEl.createDiv({ cls: 'w-100% mb-4' });
+		this.canvasEl.style.aspectRatio = getAspectRatio(this.canvas);
 		this.viewer = mountViewer({
 			app: this.app,
 			canvas: this.canvas,
-			host: canvasEl,
+			host: this.canvasEl,
 			modules: [PostProcessor],
 			path: this.filePath,
 		});
-		new Setting(this.contentEl).addButton((button) =>
-			button
-				.setButtonText(t('exportToSVG'))
-				.setCta()
-				.onClick(async () => {
-					const path = this.filePath;
-					this.viewer?.postProcess();
-					const string = await renderToString(canvasEl);
-					await this.app.vault.create(
-						`${path.slice(0, path.lastIndexOf('.'))}.svg`,
-						string,
-					);
-					this.close();
-				}),
-		);
+		if (this.settings.noExportModal) void this.export();
+		else
+			new Setting(this.contentEl).addButton((button) =>
+				button.setButtonText(t('exportToSVG')).setCta().onClick(this.export),
+			);
 	}
+
+	export = async () => {
+		if (!this.canvasEl) return;
+		const path = this.generatePath[this.settings.defaultExportLocation]();
+		await ensureAvailable(path, this.app.vault);
+		this.viewer?.postProcess();
+		const string = await renderToString(this.canvasEl);
+		await this.app.vault.create(path, string);
+		this.close();
+	};
 
 	onClose() {
 		this.viewer?.dispose();

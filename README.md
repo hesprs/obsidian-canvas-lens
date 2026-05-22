@@ -1,11 +1,14 @@
 # Obsidian Canvas Lens
 
-This is a working-in-progress Obsidian plugin that allows exporting a canvas in clean SVG.
+This is a Obsidian plugin that does two things:
 
-## Features
+- Export canvases to SVG, Obsidian only offers PNG export
+- Replace static canvas-in-notes preview with interactive viewer, see [this forum post](https://forum.obsidian.md/t/show-a-complete-preview-of-the-canvas-including-text-when-a-canvas-is-embedded-in-a-note)
 
-- [ ] Export canvases to SVG.
-- [ ] Replace static canvas-in-notes preview with interactive viewer.
+## Known Issues
+
+- Interactive viewer canvas viewport shifts when Obsidian tab shifts (fixable)
+- Cannot replace canvas file pop-up preview
 
 ## License
 

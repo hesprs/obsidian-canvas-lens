@@ -9,18 +9,27 @@ import embedCanvas from './utils/embed-canvas';
 import watchClass from './utils/watch-class';
 
 export default class CanvasLens extends Plugin {
-	private readonly trackedCanvas = new WeakMap<HTMLElement, JSONCanvasViewerInterface>();
+	private readonly trackedCanvas = new Map<HTMLElement, JSONCanvasViewerInterface>();
 
 	settings: Settings = {
-		customSvgLocation: '/',
-		defaultSvgLocation: 'same-folder',
+		customExportFolder: '/',
+		defaultExportLocation: 'sameFolder',
 		noExportModal: false,
 		substituteDefaultEmbed: true,
 	};
+	protected disconnectFunc?: () => void;
 
-	disconnect?: () => void;
+	saveSettings = async () => this.saveData(this.settings);
+	disconnect = () => {
+		activeDocument.body.removeClass('canvas-lens-substitute');
+		this.disconnectFunc?.();
+		this.disconnectFunc = undefined;
+		this.trackedCanvas.forEach((value) => value.dispose());
+		this.trackedCanvas.clear();
+	};
 	connect = () => {
-		this.disconnect = watchClass(activeDocument.body, [
+		activeDocument.body.addClass('canvas-lens-substitute');
+		this.disconnectFunc = watchClass(activeDocument.body, [
 			{
 				callback: async (el) => {
 					const parent = el.parentElement;
@@ -50,7 +59,7 @@ export default class CanvasLens extends Plugin {
 				if (view?.getViewType() === 'canvas' && view.file) {
 					if (checking) return true;
 					new ExportModal(
-						this.app,
+						this,
 						structuredClone(
 							(view as unknown as { canvas: { data: JSONCanvas } }).canvas.data,
 						),
@@ -68,6 +77,6 @@ export default class CanvasLens extends Plugin {
 	}
 
 	onunload() {
-		this.disconnect?.();
+		this.disconnect();
 	}
 }

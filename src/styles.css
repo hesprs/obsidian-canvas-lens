@@ -1,13 +1,13 @@
 @unocss;
 
-.internal-embed.canvas-embed {
+body.canvas-lens-substitute .internal-embed.canvas-embed {
 	border: 1px solid var(--background-modifier-border);
 	box-shadow: var(--background-modifier-box-shadow);
 	border-radius: 0.75em;
 	overflow: hidden;
 }
 
-.internal-embed[src] > .canvas-minimap {
+body.canvas-lens-substitute .internal-embed[src] > .canvas-minimap {
 	display: none;
 	~ .embed-title {
 		display: none;
