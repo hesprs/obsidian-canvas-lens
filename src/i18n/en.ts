@@ -19,6 +19,7 @@ const translation = {
 			'Skip the export preview modal and export directly to SVG when running the export command.',
 		name: 'Skip Export Preview Modal',
 	},
+	rendering: 'Rendering, please wait...',
 	substituteDefault: {
 		description: "Replace Obsidian's default canvas image embed with an interactive viewer.",
 		name: 'Substitute Default Canvas Embed',

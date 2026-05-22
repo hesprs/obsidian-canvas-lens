@@ -4,7 +4,7 @@
 	"version": "0.0.1",
 	"minAppVersion": "0.15.0",
 	"authorUrl": "https://hesprs.github.io",
-	"description": "Exports Canvas SVGs to your vault.",
+	"description": "Nifty enhancements to canvas - preview interactive canvas in notes, and export canvas to SVG.",
 	"author": "Hēsperus",
 	"isDesktopOnly": false
 }

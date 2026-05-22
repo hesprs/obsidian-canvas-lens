@@ -43,8 +43,11 @@ export default class ExportModal extends Modal {
 			modules: [PostProcessor],
 			path: this.filePath,
 		});
-		if (this.settings.noExportModal) void this.export();
-		else
+		if (this.settings.noExportModal) {
+			const loadingDiv = this.contentEl.createDiv({ cls: 'w-100% text-align-center', text: t('rendering') });
+			this.contentEl.appendChild(loadingDiv);
+			setTimeout(() => void this.export(), 100);
+		} else
 			new Setting(this.contentEl).addButton((button) =>
 				button.setButtonText(t('exportToSVG')).setCta().onClick(this.export),
 			);
