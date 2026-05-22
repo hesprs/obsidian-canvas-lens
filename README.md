@@ -15,6 +15,14 @@ This is a Obsidian plugin that does two things:
 
 ☝️ Rendered canvas SVG (not `<foreignObject>`)
 
+## Install
+
+This plugin is available in Obsidian plugin store:
+
+- Open Obsidian, find Community plugins
+- Search for "Canvas Lens"
+- Click "Install" and enable it
+
 ## Known Issues
 
 - Interactive viewer canvas viewport shifts when Obsidian tab shifts (fixable)
