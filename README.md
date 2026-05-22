@@ -9,11 +9,11 @@ This is a Obsidian plugin that does two things:
 
 ![embedded canvas](./assets/embed.png)
 
-☝ Canvas embedded in a note
+☝️ Canvas embedded in a note
 
 ![rendered canvas](./assets/rendered.svg)
 
-☝ Rendered canvas SVG (not `<foreignObject>`)
+☝️ Rendered canvas SVG (not `<foreignObject>`)
 
 ## Known Issues
 
@@ -23,6 +23,8 @@ This is a Obsidian plugin that does two things:
 - Text size and styling has a little difference from Obsidian's default (fixable)
 
 ## Development Roadmap
+
+The speed of development depends on the number of stars ⭐ this repo has and the amount of attention and downloads.
 
 - Fix issues
 - Add rounded corner, aspect ratio and light / dark mode options for users when exporting SVG.
