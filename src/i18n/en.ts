@@ -4,25 +4,25 @@ const translation = {
 	customExportFolder: {
 		description:
 			'Input the path to the custom export folder, use "/" to denote the vault root.',
-		name: 'Custom Export Folder',
+		name: 'Custom export folder',
 		placeholder: 'E.g. attachments/',
 	},
 	defaultExportLocation: {
 		customFolder: 'The folder specified below',
 		description: 'Choose which folder to save the exported SVG files.',
-		name: 'Default Export Location',
-		sameFolder: 'Same folder as Canvas',
+		name: 'Default export location',
+		sameFolder: 'Same folder as canvas',
 	},
 	exportToSVG: 'Export to SVG',
 	noExportModal: {
 		description:
 			'Skip the export preview modal and export directly to SVG when running the export command.',
-		name: 'Skip Export Preview Modal',
+		name: 'Skip export preview modal',
 	},
 	rendering: 'Rendering, please wait...',
 	substituteDefault: {
 		description: "Replace Obsidian's default canvas image embed with an interactive viewer.",
-		name: 'Substitute Default Canvas Embed',
+		name: 'Substitute default canvas embed',
 	},
 };
 
