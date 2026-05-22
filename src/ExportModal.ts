@@ -44,7 +44,10 @@ export default class ExportModal extends Modal {
 			path: this.filePath,
 		});
 		if (this.settings.noExportModal) {
-			const loadingDiv = this.contentEl.createDiv({ cls: 'w-100% text-align-center', text: t('rendering') });
+			const loadingDiv = this.contentEl.createDiv({
+				cls: 'w-100% text-align-center',
+				text: t('rendering'),
+			});
 			this.contentEl.appendChild(loadingDiv);
 			setTimeout(() => void this.export(), 100);
 		} else
