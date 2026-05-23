@@ -8,16 +8,15 @@ import type { App, Component } from 'obsidian';
 import { JSONCanvasViewer } from 'json-canvas-viewer';
 import { MarkdownRenderer } from 'obsidian';
 import interpretPath from './interpret-path';
-import NodeComponent from './node-to-component';
 
-type MountOptions<M extends Array<GeneralModuleCtor>> = {
+export type MountOptions<M extends Array<GeneralModuleCtor>> = {
 	canvas: JSONCanvas;
 	app: App;
 	path: string;
 	host: HTMLElement;
 	loading?: Options['loading'];
 	modules?: M;
-	component?: Component;
+	component: Component;
 	options?: Partial<Options<M>>;
 };
 
@@ -28,7 +27,7 @@ export default function mountViewer<M extends Array<GeneralModuleCtor> = []>({
 	host,
 	loading = 'normal',
 	modules,
-	component = new NodeComponent(),
+	component,
 	options,
 }: MountOptions<M>): JSONCanvasViewerInterface<M> {
 	const attachments: Record<string, string> = {};
@@ -46,13 +45,13 @@ export default function mountViewer<M extends Array<GeneralModuleCtor> = []>({
 			loading,
 			nodeComponents: {
 				markdown: async ({ container, content }) => {
-					container.addClass('px-4');
+					container.addClasses(['px-4', 'py-0.5']);
 					const response = await fetch(content);
 					const result = await response.text();
 					await MarkdownRenderer.render(app, result, container, path, component);
 				},
 				text: async ({ container, content }) => {
-					container.addClass('px-4');
+					container.addClasses(['px-4', 'py-0.5']);
 					await MarkdownRenderer.render(app, content, container, path, component);
 				},
 			},

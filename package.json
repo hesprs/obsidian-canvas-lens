@@ -1,6 +1,6 @@
 {
 	"name": "canvas-svg-export",
-	"version": "0.0.1",
+	"version": "0.1.0",
 	"private": true,
 	"license": "MIT",
 	"type": "module",
@@ -16,7 +16,6 @@
 		"notes": "node scripts/release-notes.ts"
 	},
 	"devDependencies": {
-		"@obsidian-typings/obsidian-public-latest": "latest",
 		"@tsdown/css": "^0.22.0",
 		"@types/node": "^25.8.0",
 		"@types/svgcanvas": "^2.6.0",

@@ -26,10 +26,12 @@ export class SettingTab extends PluginSettingTab {
 			.setName(t('noExportModal.name'))
 			.setDesc(t('noExportModal.description'))
 			.addToggle((component) => {
-				component.onChange((value) => {
-					this.settings.noExportModal = value;
-					void this.plugin.saveSettings();
-				});
+				component
+					.onChange((value) => {
+						this.settings.noExportModal = value;
+						void this.plugin.saveSettings();
+					})
+					.setValue(this.settings.noExportModal);
 			});
 
 		new Setting(containerEl)

@@ -1,45 +1,32 @@
-# Obsidian Canvas Lens
+# Obsidian Canvas SVG Export
 
-This is a Obsidian plugin that does two things:
-
-- Export canvases to SVG, Obsidian only offers PNG export
-- Replace static canvas-in-notes preview with interactive viewer, see [this forum post](https://forum.obsidian.md/t/show-a-complete-preview-of-the-canvas-including-text-when-a-canvas-is-embedded-in-a-note)
+In "vanilla" Obsidian, canvases can only be exported to PNG. This is a Obsidian plugin that does only one thing: Export canvases to SVG.
 
 ## Gallery
-
-![embedded canvas](./assets/embed.png)
-
-☝️ Canvas embedded in a note
 
 ![rendered canvas](./assets/rendered.svg)
 
 ☝️ Rendered canvas SVG (not `<foreignObject>`)
 
-## Install
+## Usage
 
 This plugin is available in Obsidian plugin store:
 
 - Open Obsidian, find Community plugins
-- Search for "Canvas Lens"
+- Search for "Canvas SVG Export"
 - Click "Install" and enable it
 
-## Known Issues
+To export a canvas:
 
-- Interactive viewer canvas viewport shifts when Obsidian tab shifts (fixable)
-- Cannot replace canvas in canvas pop-up previews
-- Cannot render italic text (fixable)
-- Text size and styling has a little difference from Obsidian's default (fixable)
+- Open the canvas you want to export
+- Open the command palette (`Ctrl`/`Cmd + P`) and search for "Export to SVG"
+- Click "Export to SVG" in the modal appearing
 
 ## Development Roadmap
 
 The speed of development depends on the number of stars ⭐ this repo has and the amount of attention and downloads.
 
-- Fix issues
 - Add rounded corner, aspect ratio and light / dark mode options for users when exporting SVG.
-
-**Not in roadmap**:
-
-- modify Obsidian vanilla canvas rendering
 
 ## License
 
