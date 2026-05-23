@@ -1,7 +1,7 @@
 {
-	"id": "canvas-lens",
-	"name": "Canvas Lens",
-	"version": "0.0.1",
+	"id": "canvas-svg-export",
+	"name": "Canvas SVG Export",
+	"version": "0.1.0",
 	"minAppVersion": "0.15.0",
 	"authorUrl": "https://hesprs.github.io",
 	"description": "Nifty enhancements to canvas - preview interactive canvas in notes, and export canvas to SVG.",

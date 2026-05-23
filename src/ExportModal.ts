@@ -2,12 +2,12 @@ import type CanvasLens from '@';
 import type { JSONCanvas, JSONCanvasViewerInterface } from 'json-canvas-viewer';
 import { Modal, Setting } from 'obsidian';
 import type { Settings } from '@/settings';
+import PostProcessor from '@/CanvasPostProcessor';
 import t from '@/i18n';
-import ensureAvailable from '@/utils/ensure-parents';
+import ensureAvailable from '@/utils/ensure-available';
 import getAspectRatio from '@/utils/get-aspect-ratio';
 import mountViewer from '@/utils/mount-viewer';
 import renderToString from '@/utils/render-to-string';
-import PostProcessor from '@/viewer-modules/CanvasPostProcessor';
 
 export default class ExportModal extends Modal {
 	constructor(

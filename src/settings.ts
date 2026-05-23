@@ -4,14 +4,13 @@ import t from '@/i18n';
 import formatFolder from './utils/format-folder';
 
 export type Settings = {
-	substituteDefaultEmbed: boolean;
 	defaultExportLocation: 'sameFolder' | 'custom';
 	customExportFolder: string;
 	noExportModal: boolean;
 };
 
 export class SettingTab extends PluginSettingTab {
-	constructor(private readonly plugin: CanvasLens) {
+	constructor(readonly plugin: CanvasLens) {
 		super(plugin.app, plugin);
 		this.settings = plugin.settings;
 	}
@@ -22,18 +21,6 @@ export class SettingTab extends PluginSettingTab {
 	display() {
 		const { containerEl } = this;
 		containerEl.empty();
-
-		new Setting(containerEl)
-			.setName(t('substituteDefault.name'))
-			.setDesc(t('substituteDefault.description'))
-			.addToggle((component) => {
-				component.setValue(this.settings.substituteDefaultEmbed).onChange((value) => {
-					this.settings.substituteDefaultEmbed = value;
-					void this.plugin.saveSettings();
-					if (value) this.plugin.connect();
-					else this.plugin.disconnect?.();
-				});
-			});
 
 		new Setting(containerEl)
 			.setName(t('noExportModal.name'))

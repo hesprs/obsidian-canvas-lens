@@ -8,6 +8,9 @@ importers:
 
   .:
     devDependencies:
+      '@obsidian-typings/obsidian-public-latest':
+        specifier: latest
+        version: 6.10.0(@types/node@25.8.0)
       '@tsdown/css':
         specifier: ^0.22.0
         version: 0.22.0(jiti@2.7.0)(postcss@8.5.14)(tsdown@0.22.0)
@@ -182,6 +185,14 @@ packages:
 
   '@needle-di/core@1.1.2':
     resolution: {integrity: sha512-9CVnXjK33JeqUwAz5k/D+ti4ZfJ17m5AXsUcOwErbQ8baTNDPt1erVFGjipxxwcUj86Oxap3dALz6U70xsUsFg==}
+
+  '@obsidian-typings/obsidian-public-1.12.7@6.12.0':
+    resolution: {integrity: sha512-LiNg3JEhvePKRCl1Q+VgPq+k0jA0LX9SAh1rL0Xm2RUaK4+wopc1CFivhaQpYJUe79iCSW74DVqILvRaprCnNw==}
+    peerDependencies:
+      '@types/node': '>=16.0.0'
+
+  '@obsidian-typings/obsidian-public-latest@6.10.0':
+    resolution: {integrity: sha512-CGJ6QZTss9+59KYLgVGGp8hqNdTpk8vd0bX+9lczUect33WBXZ4bTlo2iV9NzqS/OixA5JwR2/QixVXEhd5kbg==}
 
   '@oxc-parser/binding-android-arm-eabi@0.124.0':
     resolution: {integrity: sha512-+R9zCafSL8ovjokdPtorUp3sXrh8zQ2AC2L0ivXNvlLR0WS+5WdPkNVrnENq5UvzagM4Xgl0NPsJKz3Hv9+y8g==}
@@ -2197,6 +2208,16 @@ snapshots:
     optional: true
 
   '@needle-di/core@1.1.2': {}
+
+  '@obsidian-typings/obsidian-public-1.12.7@6.12.0(@types/node@25.8.0)':
+    dependencies:
+      '@types/node': 25.8.0
+
+  '@obsidian-typings/obsidian-public-latest@6.10.0(@types/node@25.8.0)':
+    dependencies:
+      '@obsidian-typings/obsidian-public-1.12.7': 6.12.0(@types/node@25.8.0)
+    transitivePeerDependencies:
+      - '@types/node'
 
   '@oxc-parser/binding-android-arm-eabi@0.124.0':
     optional: true

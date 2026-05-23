@@ -20,10 +20,6 @@ const translation = {
 		name: 'Skip export preview modal',
 	},
 	rendering: 'Rendering, please wait...',
-	substituteDefault: {
-		description: "Replace Obsidian's default canvas image embed with an interactive viewer.",
-		name: 'Substitute default canvas embed',
-	},
 };
 
 export default translation;
